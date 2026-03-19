@@ -27,7 +27,7 @@ export default function RecruiterDashboard() {
         api.getSessions(),
         api.getStats()
       ]);
-      setSessions(sData || []);
+      setSessions(Array.isArray(sData) ? sData : []);
       setStats(statData || {});
     } catch (err) {
       console.error(err);
@@ -128,7 +128,11 @@ export default function RecruiterDashboard() {
         <div className="grid md:grid-cols-4 gap-6 mb-16">
           <MetricCard label="Global Sessions" value={stats.total_sessions || 0} icon="🌍" trend="+12.5%" />
           <MetricCard label="Active Nodes" value={stats.total_students || 0} icon="📡" trend="+8.2%" />
-          <MetricCard label="Clearance Rate" value={`${Math.round((sessions.filter(s => s.status === 'completed').length / (sessions.length || 1)) * 100)}%`} icon="🛡️" trend="+23%" />
+          <MetricCard 
+            label="Clearance Rate" 
+            value={`${Math.round(((Array.isArray(sessions) ? sessions : []).filter(s => s.status === 'completed').length / (sessions?.length || 1)) * 100)}%`} 
+            icon="🛡️" trend="+23%" 
+          />
           <MetricCard label="Integrity Flags" value={stats.copy_flagged || 0} icon="⚠️" trend="-5.1%" negative />
         </div>
 
@@ -136,7 +140,7 @@ export default function RecruiterDashboard() {
         <div className="mb-16">
             <h3 className="text-xs font-black text-white uppercase tracking-[0.4em] opacity-40 ml-1 mb-8">Live Interview Syncs</h3>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sessions.filter(s => s.meeting_link && s.status !== 'completed').map(m => (
+                {(Array.isArray(sessions) ? sessions : []).filter(s => s.meeting_link && s.status !== 'completed').map(m => (
                     <div key={m.id} className="glass-card p-8 group hover:border-blue-500/30 transition-all relative overflow-hidden">
                         <div className="absolute -top-10 -right-10 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
                         <div className="flex justify-between items-start mb-6 border-b border-white/5 pb-4">
@@ -161,7 +165,7 @@ export default function RecruiterDashboard() {
                         </Link>
                     </div>
                 ))}
-                {sessions.filter(s => s.meeting_link && s.status !== 'completed').length === 0 && (
+                {(Array.isArray(sessions) ? sessions : []).filter(s => s.meeting_link && s.status !== 'completed').length === 0 && (
                     <div className="lg:col-span-3 py-16 text-center border border-dashed border-white/10 rounded-3xl bg-white/[0.01]">
                         <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.5em]">No live meetings scheduled</p>
                     </div>
@@ -190,7 +194,7 @@ export default function RecruiterDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
-                {sessions.map(s => (
+                {(Array.isArray(sessions) ? sessions : []).map(s => (
                   <tr key={s.id} className="hover:bg-white/[0.02] transition-colors group">
                     <td className="px-10 py-6">
                       <div className="flex items-center space-x-5">
