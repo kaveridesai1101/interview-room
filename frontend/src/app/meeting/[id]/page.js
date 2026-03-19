@@ -8,7 +8,7 @@ import {
     Mic, MicOff, Video, VideoOff, PhoneOff, 
     MonitorUp, Smile, MessageSquare, Users, 
     MoreVertical, Info, LayoutGrid, Hand, 
-    X, Search, Send
+    X, Search, Send, AlertTriangle, CheckCircle, Shield
 } from 'lucide-react';
 import SentinelAssistant from '@/components/SentinelAssistant';
 import AutonomousInterviewer from '@/components/AutonomousInterviewer';
