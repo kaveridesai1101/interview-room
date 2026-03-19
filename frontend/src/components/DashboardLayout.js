@@ -40,8 +40,9 @@ export default function DashboardLayout({ children, role }) {
 
   return (
     <div className="min-h-screen bg-background flex text-foreground">
-      {/* Premium Dark Sidebar */}
-      <aside className="w-72 bg-sidebar-bg border-r border-white/5 flex flex-col fixed h-full z-40">
+      {/* Premium Dark Sidebar - Hidden for Students for Minimalist Look */}
+      {role !== 'student' && (
+        <aside className="w-72 bg-sidebar-bg border-r border-white/5 flex flex-col fixed h-full z-40">
         <div className="p-8">
           <Link href="/" className="flex items-center space-x-3 group">
              <div className="w-10 h-10 premium-blue-gradient rounded-xl flex items-center justify-center text-white font-bold text-xl ring-1 ring-white/10 group-hover:scale-110 transition-transform">B</div>
@@ -74,12 +75,15 @@ export default function DashboardLayout({ children, role }) {
               <button className="w-full py-2.5 bg-white text-black text-[11px] font-black uppercase tracking-wider rounded-xl hover:bg-blue-50 transition-colors">Level Up</button>
            </div>
         </div>
+        </div>
       </aside>
+      )}
 
       {/* Main Content Area */}
-      <div className="ml-72 flex-1 flex flex-col min-h-screen relative">
-        {/* Floating Glass Header */}
-        <header className="h-24 bg-background/40 backdrop-blur-xl border-b border-white/5 sticky top-0 z-30 px-10 flex items-center justify-between">
+      <div className={`${role !== 'student' ? 'ml-72' : ''} flex-1 flex flex-col min-h-screen relative`}>
+        {/* Floating Glass Header - Hidden for Student Dashboard Minimalist View */}
+        {role !== 'student' && (
+          <header className="h-24 bg-background/40 backdrop-blur-xl border-b border-white/5 sticky top-0 z-30 px-10 flex items-center justify-between">
            <div className="flex-1 max-w-xl">
              <div className="relative group">
                 <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted text-lg group-hover:scale-110 transition-transform cursor-default">🔍</span>
@@ -119,7 +123,8 @@ export default function DashboardLayout({ children, role }) {
                  </button>
               </div>
            </div>
-        </header>
+          </header>
+        )}
 
         {/* Dynamic Page Content */}
         <main className="flex-1 p-12 relative">
