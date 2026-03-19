@@ -75,7 +75,6 @@ export default function DashboardLayout({ children, role }) {
               <button className="w-full py-2.5 bg-white text-black text-[11px] font-black uppercase tracking-wider rounded-xl hover:bg-blue-50 transition-colors">Level Up</button>
            </div>
         </div>
-        </div>
       </aside>
       )}
 
