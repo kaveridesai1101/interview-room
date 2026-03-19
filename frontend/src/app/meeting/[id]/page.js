@@ -188,13 +188,15 @@ export default function MeetingPage() {
         );
     }
 
+    // Main Meeting View
     return (
         <div className="fixed inset-0 bg-[#202124] flex flex-col overflow-hidden text-neutral-200 select-none">
             {/* Main View Area */}
             <div className="flex-1 flex overflow-hidden relative">
                 {/* Jitsi IFrame Container */}
                 <div className={`flex-1 transition-all duration-500 ease-in-out ${activeSidebar ? 'mr-96' : ''}`}>
-                    <JitsiMeeting
+                    {config?.room_name ? (
+                        <JitsiMeeting
                         domain="meet.jit.si"
                         roomName={config?.room_name}
                         onApiReady={(api) => {
@@ -257,6 +259,15 @@ export default function MeetingPage() {
                             iframeRef.style.opacity = lobbyWaiting ? '0' : '1';
                         }}
                     />
+                    ) : (
+                        <div className="h-full flex items-center justify-center">
+                            <div className="text-center p-12 glass-card border-red-500/20">
+                                <AlertTriangle className="mx-auto mb-6 text-red-500" size={48} />
+                                <h3 className="text-2xl font-black text-white mb-2">Node Sync Interrupted</h3>
+                                <p className="text-muted text-sm font-medium italic">Failed to retrieve meeting protocol. Verify link integrity.</p>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Lobby Overlay */}
                     {lobbyWaiting && (
@@ -445,9 +456,9 @@ function PersonRow({ name, isMe }) {
         <div className="flex items-center justify-between group py-2">
             <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-black text-white">
-                    {name?.charAt(0).toUpperCase()}
+                    {name ? name.charAt(0).toUpperCase() : '?'}
                 </div>
-                <span className="text-sm font-medium">{name} {isMe && '(You)'}</span>
+                <span className="text-sm font-medium">{name || 'Node Unknown'} {isMe && '(You)'}</span>
             </div>
             <div className="flex items-center space-x-1 opacity-60">
                 <Mic size={14} />
