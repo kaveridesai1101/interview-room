@@ -20,7 +20,7 @@ export default function StudentDashboard() {
         api.getSessions(),
         api.getStats()
       ]);
-      setSessions(sData || []);
+      setSessions(Array.isArray(sData) ? sData : []);
       setStats(statData || {});
       setError(null);
     } catch (err) {
@@ -59,7 +59,11 @@ export default function StudentDashboard() {
         <div className="grid md:grid-cols-4 gap-6 mb-16">
           <MetricCard label="Total Practice" value={stats.my_sessions || 0} icon="📅" trend="+12%" />
           <MetricCard label="Readiness Index" value={`${stats.avg_score || 0}%`} icon="📡" trend="+8%" />
-          <MetricCard label="Completed Labs" value={sessions.filter(s => s.status === 'completed').length} icon="✔️" trend="+23%" />
+          <MetricCard 
+            label="Completed Labs" 
+            value={(Array.isArray(sessions) ? sessions : []).filter(s => s.status === 'completed').length} 
+            icon="✔️" trend="+23%" 
+          />
           <MetricCard label="Sync Latency" value="42ms" icon="🕒" trend="-5%" />
         </div>
 
@@ -67,7 +71,7 @@ export default function StudentDashboard() {
         <div className="mb-16">
             <h3 className="text-xs font-black text-white uppercase tracking-[0.4em] opacity-40 ml-1 mb-8">Live Interview Syncs</h3>
             <div className="grid md:grid-cols-2 gap-6">
-                {sessions.filter(s => s.meeting_link && s.status !== 'completed').map(m => (
+                {(Array.isArray(sessions) ? sessions : []).filter(s => s.meeting_link && s.status !== 'completed').map(m => (
                     <div key={m.id} className="glass-card p-8 group hover:border-blue-500/30 transition-all relative overflow-hidden bg-gradient-to-br from-white/[0.02] to-blue-500/5">
                         <div className="flex justify-between items-start mb-6 border-b border-white/5 pb-4">
                              <div>
@@ -91,7 +95,7 @@ export default function StudentDashboard() {
                         </Link>
                     </div>
                 ))}
-                {sessions.filter(s => s.meeting_link && s.status !== 'completed').length === 0 && (
+                {(Array.isArray(sessions) ? sessions : []).filter(s => s.meeting_link && s.status !== 'completed').length === 0 && (
                     <div className="md:col-span-2 py-12 text-center border border-dashed border-white/10 rounded-3xl bg-white/[0.01]">
                         <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.5em]">No live interviews scheduled by recruiters</p>
                     </div>
@@ -103,7 +107,7 @@ export default function StudentDashboard() {
             {/* Recent Telemetry List */}
             <div className="lg:col-span-2 space-y-8">
             <h3 className="text-xs font-black text-white uppercase tracking-[.4em] opacity-40 ml-1">Recent Telemetry</h3>
-            {sessions.length > 0 ? sessions.map(s => (
+            {(Array.isArray(sessions) ? sessions : []).length > 0 ? (Array.isArray(sessions) ? sessions : []).map(s => (
               <div key={s.id} className="glass-card p-8 flex justify-between items-center group hover:bg-white/[0.03]">
                 <div className="flex items-center space-x-6">
                    <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-all border border-white/10">📹</div>
