@@ -1,0 +1,47 @@
+# Node
+node_modules/
+dist/
+build/
+.next/
+out/
+.env*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+*.db
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.txt
+exports/
+uploads/
+debug_imports.py
+test_imports.py
+pyright_output.txt
+pyright_utf8.txt
+backend_errors_utf8.txt
+backend_pyright_errors.txt
+backend_reverify.txt
+backend_reverify_utf8.txt
+final_reverify.txt
+final_reverify_utf8.txt
+otp_debug.txt

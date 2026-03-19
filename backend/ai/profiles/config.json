@@ -1,0 +1,102 @@
+{
+    "profiles": {
+        "classroom": {
+            "name": "Classroom",
+            "target_classes": [
+                "person",
+                "cell phone",
+                "laptop",
+                "backpack",
+                "book"
+            ],
+            "threat_weights": {
+                "fight": 1.0,
+                "fall": 0.8,
+                "weapon": 1.0,
+                "unauthorized_entry": 0.7,
+                "classroom_disturbance": 0.8,
+                "person": 0.1,
+                "cell phone": 0.2
+            },
+            "thresholds": {
+                "critical": 80,
+                "high": 60,
+                "suspicious": 25
+            }
+        },
+        "railway": {
+            "name": "Railway Station / Airport",
+            "target_classes": [
+                "person",
+                "backpack",
+                "suitcase",
+                "handbag",
+                "bicycle"
+            ],
+            "threat_weights": {
+                "crowd_panic": 0.9,
+                "abandoned_bag": 0.8,
+                "weapon": 1.0,
+                "suspicious_object": 0.9,
+                "theft": 0.8,
+                "person": 0.1,
+                "suitcase": 0.4
+            },
+            "thresholds": {
+                "critical": 85,
+                "high": 65,
+                "suspicious": 30
+            }
+        },
+        "public": {
+            "name": "Public Space / Mall",
+            "target_classes": [
+                "person",
+                "backpack",
+                "suitcase",
+                "handbag",
+                "knife",
+                "motorcycle",
+                "cell phone"
+            ],
+            "threat_weights": {
+                "fight": 1.2,
+                "weapon": 1.5,
+                "knife": 1.5,
+                "pistol": 1.5,
+                "theft": 1.0,
+                "suspicious_object": 0.8,
+                "fall": 0.6,
+                "person": 0.1
+            },
+            "thresholds": {
+                "critical": 80,
+                "high": 60,
+                "suspicious": 20
+            }
+        },
+        "interview": {
+            "name": "AI Interview Proctoring",
+            "target_classes": [
+                "person",
+                "cell phone",
+                "laptop",
+                "book",
+                "keyboard",
+                "mouse"
+            ],
+            "threat_weights": {
+                "phone_violation": 1.5,
+                "multiple_persons": 1.2,
+                "unauthorized_object": 0.8,
+                "gaze_distraction": 0.5,
+                "person": 0.05
+            },
+            "thresholds": {
+                "critical": 70,
+                "high": 50,
+                "suspicious": 15
+            }
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "source_directories": [
+    "."
+  ],
+  "search_path": [
+    "c:/Users/kusum/OneDrive/Desktop/AI_Interview_room_combined/AI-Interview-Room-Unified",
+    "c:/Users/kusum/OneDrive/Desktop/AI_Interview_room_combined/AI-Interview-Room-Unified/venv/Lib/site-packages"
+  ]
+}
