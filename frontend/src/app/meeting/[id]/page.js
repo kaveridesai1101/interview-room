@@ -45,23 +45,24 @@ export default function MeetingPage() {
         const fetchConfig = async () => {
             try {
                 const user = auth.getUser();
-                const currentRole = user ? user.role : 'guest';
-                setRole(currentRole);
-
                 let data;
-                if (currentRole === 'guest') {
-                    data = await api.getPublicMeetingConfig(id);
-                } else {
+                if (user) {
+                    setRole(user.role);
+                    setGuestInfo({ name: user.full_name, email: user.email });
+                    // If logged in, we bypass the guest name prompt phase
+                    setIsGuestJoining(true);
                     data = await api.getMeetingConfig(id);
+                } else {
+                    setRole('guest');
+                    data = await api.getPublicMeetingConfig(id);
                 }
-
+                
                 if (data.room_name) {
                     setConfig(data);
                 }
             } catch (err) {
-                console.error('Failed to load meeting config:', err);
-                alert('Conflict in meeting parameters or session not found.');
-                router.push('/');
+                console.error("Config fetch error:", err);
+                // We keep config as null, which shows the "Node Sync Interrupted" fallback
             } finally {
                 setLoading(false);
             }
@@ -250,7 +251,7 @@ export default function MeetingPage() {
                             SETTINGS_SECTIONS: [],
                         }}
                         userInfo={{
-                            displayName: config?.user_name || guestInfo.name
+                            displayName: config?.user_name || guestInfo.name || 'Anonymous User'
                         }}
                         getIFrameRef={(iframeRef) => {
                             iframeRef.style.height = 'calc(100% - 96px)';

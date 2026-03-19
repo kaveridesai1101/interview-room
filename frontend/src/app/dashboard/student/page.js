@@ -9,6 +9,7 @@ export default function StudentDashboard() {
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [meetingCode, setMeetingCode] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -29,6 +30,21 @@ export default function StudentDashboard() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleJoinByCode = (e) => {
+    e.preventDefault();
+    if (!meetingCode) return;
+    
+    // Extract ID if it's a full link, otherwise use as ID
+    let id = meetingCode;
+    if (meetingCode.includes('/meeting/')) {
+        id = meetingCode.split('/meeting/')[1].split('/')[0];
+    } else if (meetingCode.includes('/interview/')) {
+        id = meetingCode.split('/interview/')[1].split('/')[0];
+    }
+    
+    window.location.href = `/meeting/${id}`;
   };
 
   const startInterview = async (type) => {
@@ -53,6 +69,32 @@ export default function StudentDashboard() {
                 <p className="text-[10px] font-black text-red-400 uppercase tracking-widest">{error}</p>
             </div>
           )}
+
+          {/* New: Join with Code & Profile Controls */}
+          <div className="mt-12 flex flex-col md:flex-row items-center gap-6">
+              <form onSubmit={handleJoinByCode} className="flex-1 w-full flex items-center bg-white/5 border border-white/5 p-1 rounded-2xl focus-within:border-blue-500/50 transition-all">
+                  <input 
+                    value={meetingCode}
+                    onChange={(e) => setMeetingCode(e.target.value)}
+                    placeholder="Enter meeting code or link" 
+                    className="flex-1 bg-transparent border-none outline-none px-6 py-3 text-sm text-white placeholder-white/20 font-medium"
+                  />
+                  <button 
+                    type="submit"
+                    disabled={!meetingCode}
+                    className="px-8 py-3 bg-blue-600 disabled:bg-white/5 disabled:text-neutral-500 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all hover:bg-blue-500 active:scale-95"
+                  >
+                    Join
+                  </button>
+              </form>
+              <div className="flex items-center space-x-4">
+                  <div className="h-10 w-px bg-white/5 mx-2 hidden md:block" />
+                  <button className="h-14 px-8 bg-white/5 border border-white/5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white hover:bg-white/10 transition-all flex items-center">
+                      <span className="text-xl mr-3">⚙️</span>
+                      Profile Settings
+                  </button>
+              </div>
+          </div>
         </div>
 
         {/* Premium Metrics Cards */}
